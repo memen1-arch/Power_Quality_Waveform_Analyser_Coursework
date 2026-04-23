@@ -3,4 +3,5 @@ project(PowerQualityWaveformAnalyser C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(PowerQualityWaveformAnalyser main.c waveform.h)
+add_executable(PowerQualityWaveformAnalyser main.c waveform.h
+        io.c)
