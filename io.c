@@ -25,16 +25,28 @@ int PQLR(void) {
         double time = atof(token);
 
         token = strtok(NULL,",");
-        double voltage = atof(token);
+        double phase_A_voltage = atof(token);
 
         token = strtok(NULL,",");
-        double current = atof(token);
+        double phase_B_voltage = atof(token);
 
         token = strtok(NULL,",");
-        double power = atof(token);
+        double phase_C_voltage = atof(token);
 
-        printf("time = %.1f,voltage = %.1f,current = %.1f , power = %.1f\n",
-            time,voltage,current,power);
+        token = strtok(NULL,",");
+        double line_current = atof(token);
+
+        token = strtok(NULL,",");
+        double frequency = atof(token);
+
+        token = strtok(NULL,",");
+        double power_factor = atof(token);
+
+        token = strtok(NULL,",");
+        double thd_percent = atof(token);
+
+        printf("time = %.1f,PhaseAVolt = %.1f,PhaseBVolt = %.1f , PhaseCVolt = %.1f,Line current = %.1f,Frequency = %.1f,Power Factor = %.1f,thd percent = %.1f\n",
+            time,phase_A_voltage,phase_B_voltage,phase_C_voltage,line_current,frequency,power_factor,thd_percent);
     }
     fclose(fp);
     return 0;
