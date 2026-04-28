@@ -62,7 +62,7 @@ int PQLR(void) {
 
             n++; //adds 1 to the n counter
         }
-
+    rms_Phase_AV(sample,n);
     fclose(fp);
     return 0;
 }
