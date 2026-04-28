@@ -17,9 +17,12 @@ int PQLR(void) {
         printf("Error opening file\n");
         return 1;
     }
+    WaveformSample *sample = WaveformArray();
+    int n= 0;
+
     char line[256]; //Parsing Header
     fgets(line,sizeof(line),fp);
-    while (fgets(line,sizeof(line),fp) != NULL) {
+    while (fgets(line,sizeof(line),fp) != NULL && n < 8) { //read one line from the CSV until there is no more lines or n is > 8
         char *token;
         token = strtok(line,",");
         double time = atof(token);
@@ -45,9 +48,21 @@ int PQLR(void) {
         token = strtok(NULL,",");
         double thd_percent = atof(token);
 
+            sample[n].timestamp = time;
+            sample[n].phase_A_voltage = phase_A_voltage;
+            sample[n].phase_B_voltage = phase_B_voltage;
+            sample[n].phase_C_voltage = phase_C_voltage;
+            sample[n].line_current = line_current;
+            sample[n].frequency = frequency;
+            sample[n].power_factor = power_factor;
+            sample[n].thd_percent = thd_percent;
+
         printf("time = %.1f,PhaseAVolt = %.1f,PhaseBVolt = %.1f , PhaseCVolt = %.1f,Line current = %.1f,Frequency = %.1f,Power Factor = %.1f,thd percent = %.1f\n",
             time,phase_A_voltage,phase_B_voltage,phase_C_voltage,line_current,frequency,power_factor,thd_percent);
-    }
+
+            n++; //adds 1 to the n counter
+        }
+
     fclose(fp);
     return 0;
 }
