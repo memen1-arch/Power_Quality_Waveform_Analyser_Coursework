@@ -57,7 +57,7 @@ int PQLR(void) {
             sample[n].power_factor = power_factor;
             sample[n].thd_percent = thd_percent;
 
-        printf("time = %.1f,PhaseAVolt = %.1f,PhaseBVolt = %.1f , PhaseCVolt = %.1f,Line current = %.1f,Frequency = %.1f,Power Factor = %.1f,thd percent = %.1f\n",
+        printf("time = %.4f,PhaseAVolt = %.4f,PhaseBVolt = %.4f , PhaseCVolt = %.4f,Line current = %.4f,Frequency = %.4f,Power Factor = %.4f,thd percent = %.4f\n",
             time,phase_A_voltage,phase_B_voltage,phase_C_voltage,line_current,frequency,power_factor,thd_percent);
 
             n++; //adds 1 to the n counter
