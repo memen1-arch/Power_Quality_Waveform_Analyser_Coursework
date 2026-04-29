@@ -4,11 +4,20 @@
 #include "waveform.h"
 
 double compute_rms(WaveformSample *sample,int n) {
-    double sum_sq =0.0;
+    double sum_sqA =0.0;
+    double sum_sqB = 0.0;
+    double sum_sqC = 0.0;
+
     for (int i =0; i < n; i++) {
-        sum_sq += sample[i].phase_A_voltage * sample[i].phase_A_voltage;
+        sum_sqA += sample[i].phase_A_voltage * sample[i].phase_A_voltage;
+        sum_sqB += sample[i].phase_B_voltage * sample[i].phase_B_voltage;
+        sum_sqC += sample[i].phase_C_voltage * sample[i].phase_C_voltage;
     }
-    double rms = sqrt(sum_sq/n);
-    printf("RMS = %f\n",rms);
-    return rms;
+    double rmsA = sqrt(sum_sqA/n);
+    double rmsB = sqrt(sum_sqB/n);
+    double rmsC = sqrt(sum_sqC/n);
+    printf("RMS of Phase A = %f,RMS of Phase B = %f ,RMS of Phase C = %f\n",rmsA,rmsB,rmsC);
+    return rmsA;
+    return rmsB;
+    return rmsC;
 }
