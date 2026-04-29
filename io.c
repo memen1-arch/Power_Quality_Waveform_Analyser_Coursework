@@ -3,8 +3,28 @@
 #include <stdlib.h>
 #include "string.h"
 #include "waveform.h"
-WaveformSample* WaveformArray(void){
-     WaveformSample*arr = malloc(8*sizeof(WaveformSample));
+int lineCountReader(void) { //read each line add a count when line has been read until CSV has been fully read
+    FILE *fp = fopen("power_quality_log.csv","r"); //Reading our CSV file
+    if (fp == NULL) {
+        printf("Error opening file\n");
+        return 1;
+    }
+    char line[256];
+    int count = 0;
+
+    if (fgets(line,sizeof(line),fp) == NULL) {
+        fclose(fp);
+        return 0;
+    }
+    while (fgets(line,sizeof(line),fp) != NULL) {
+        printf("%s",line);
+        count++;
+    }
+    fclose(fp);
+    return count;
+}
+WaveformSample* WaveformArray(int count){
+     WaveformSample*arr = malloc(count*sizeof(WaveformSample)); //allocate enough memory
     if (arr == NULL) {
         return NULL;
     }
@@ -12,17 +32,22 @@ WaveformSample* WaveformArray(void){
 }
 
 int PQLR(void) {
+    int count = lineCountReader();
+    if (count == 0) {
+        printf("Error reading CSV\n");
+        return 1;
+    }
     FILE *fp = fopen("power_quality_log.csv","r"); //Reading our CSV file
     if (fp == NULL) {
         printf("Error opening file\n");
         return 1;
     }
-    WaveformSample *sample = WaveformArray();
+    WaveformSample *sample = WaveformArray(count);
     int n= 0;
 
     char line[256]; //Parsing Header
     fgets(line,sizeof(line),fp);
-    while (fgets(line,sizeof(line),fp) != NULL && n < 8) { //read one line from the CSV until there is no more lines or n is > 8
+    while (fgets(line,sizeof(line),fp) != NULL && n < count) { //read one line from the CSV until there is no more lines or n is > 50
         char *token;
         token = strtok(line,",");
         double time = atof(token);
@@ -62,7 +87,8 @@ int PQLR(void) {
 
             n++; //adds 1 to the n counter
         }
-    rms_Phase_AV(sample,n);
+    compute_rms(sample,n);
+    free(sample);
     fclose(fp);
     return 0;
 }
