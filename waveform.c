@@ -16,8 +16,19 @@ double compute_rms(WaveformSample *sample,int n) {
     double rmsA = sqrt(sum_sqA/n);
     double rmsB = sqrt(sum_sqB/n);
     double rmsC = sqrt(sum_sqC/n);
-    printf("RMS of Phase A = %f,RMS of Phase B = %f ,RMS of Phase C = %f\n",rmsA,rmsB,rmsC);
-    return rmsA;
-    return rmsB;
-    return rmsC;
+    char choice;
+    printf("Which RMS phase would you like('A','B','C')\n");
+    scanf("%c",&choice);
+    switch (choice) {
+        case 'A':
+        printf("RMS of Phase A = %f",rmsA);
+        break;
+        case'B':
+        printf("RMS of Phase B = %f",rmsB);
+        break;
+        case'C':
+        printf("RMS of Phase C = %f",rmsC);
+        break;
+    }
+    return 0;
 }
