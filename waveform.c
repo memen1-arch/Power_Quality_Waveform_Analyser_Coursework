@@ -149,3 +149,41 @@ double compute_DCoffset(WaveformSample *sample,int n,int phase) {
             return 0.0;
     }
 }
+
+double detectClipping(WaveformSample *sample, int n) {
+    int clipA = 0;
+    int clipB = 0;
+    int clipC = 0;
+
+    for (int i =0; i < n; i++) {
+        if (sample[i].phase_A_voltage >= 324.9 || sample[i].phase_A_voltage <= -324.9) {
+            clipA++;
+        }
+        if (sample[i].phase_B_voltage >= 324.9 || sample[i].phase_B_voltage <= -324.9) {
+            clipB++;
+        }
+        if (sample[i].phase_C_voltage >= 324.9 || sample[i].phase_C_voltage <= -324.9) {
+            clipC++;
+        }
+    }
+        char choice;
+        printf("Which voltage phase would you like to see the clipping count for('A','B','C')\n");
+        scanf(" %c",&choice);
+        switch (choice) {
+            case 'A': {
+                printf("Clipping count for phase A = %d\n",clipA);
+                return clipA;
+            }
+            case 'B': {
+                printf("Clipping count for phase B = %d\n",clipB);
+                return clipB;
+            }
+            case 'C': {
+                printf("Clipping count for phase C = %d\n",clipC);
+                return clipC;
+            }
+            default:
+                printf("Invalid phase\n");
+                return 0.0;
+        }
+    }

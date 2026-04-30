@@ -87,6 +87,8 @@ int PQLR(void) {
         }
     compute_rms(sample,n);
     compute_peakToPeak(sample,n);
+    compute_DCoffset(sample,n);
+    detectClipping(sample,n);
     free(sample);
     fclose(fp);
     return 0;
