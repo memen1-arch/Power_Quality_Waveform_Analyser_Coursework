@@ -97,3 +97,55 @@ double compute_peakToPeak(WaveformSample *sample,int n,int phase) {
             return 0.0;
     }
 }
+double compute_DCoffsetA(WaveformSample *sample,int n) {
+    double DCoffsetA = 0.0;
+    double voltageASum = 0.0;
+    for (int i =0; i < n; i++) {
+        voltageASum = voltageASum + sample[i].phase_A_voltage;
+        DCoffsetA = (voltageASum / n);
+    }
+    return DCoffsetA;
+}
+double compute_DCoffsetB(WaveformSample *sample,int n) {
+    double DCoffsetB = 0.0;
+    double voltageBSum = 0.0;
+    for (int i =0; i < n; i++) {
+        voltageBSum = voltageBSum + sample[i].phase_B_voltage;
+        DCoffsetB = (voltageBSum / n);
+    }
+    return DCoffsetB;
+}
+double compute_DCoffsetC(WaveformSample *sample,int n) {
+    double DCoffsetC = 0.0;
+    double voltageCSum = 0.0;
+    for (int i =0; i < n; i++) {
+        voltageCSum = voltageCSum + sample[i].phase_C_voltage;
+        DCoffsetC = (voltageCSum / n);
+    }
+    return DCoffsetC;
+}
+double compute_DCoffset(WaveformSample *sample,int n,int phase) {
+    char choice;
+    printf("Which DC offset voltage phase would you like('A','B','C')\n");
+    scanf(" %c",&choice);
+    switch (choice) {
+        case 'A': {
+            double tempOS = compute_DCoffsetA(sample,n);
+            printf("DC offset of phase A=%f\n",tempOS);
+            return tempOS;
+        }
+        case 'B': {
+            double tempOS = compute_DCoffsetB(sample,n);
+            printf("DC offset of phase B=%f\n",tempOS);
+            return tempOS;
+        }
+        case 'C': {
+            double tempOS = compute_DCoffsetC(sample,n);
+            printf("DC offset of phase C=%f\n",tempOS);
+            return tempOS;
+        }
+        default:
+            printf("Invalid phase\n");
+            return 0.0;
+    }
+}
