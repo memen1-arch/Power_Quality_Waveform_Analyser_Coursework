@@ -17,7 +17,7 @@ int lineCountReader(void) { //read each line add a count when line has been read
         return 0;
     }
     while (fgets(line,sizeof(line),fp) != NULL) {
-        printf("%s",line);
+        //printf("%s",line);
         count++;
     }
     fclose(fp);
@@ -86,6 +86,7 @@ int PQLR(void) {
             n++; //adds 1 to the n counter
         }
     compute_rms(sample,n);
+    compute_peakToPeak(sample,n);
     free(sample);
     fclose(fp);
     return 0;
