@@ -11,6 +11,10 @@ typedef struct {
     double rmsA,rmsB,rmsC;
 }rmsResult;
 rmsResult compute_rms(WaveformSample *sample,int n);
+typedef struct {
+    double peakToPeakA,peakToPeakB,peakToPeakC;
+}peakToPeak;
+void pToPPhaseQ(peakToPeak peak_to_peak);
 void check_compliance(double rmsA,double rmsB,double rmsC);
 void rmsPhaseQ(rmsResult result);
 int lineCountReader(void);

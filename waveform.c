@@ -33,70 +33,61 @@ void rmsPhaseQ(rmsResult result) {
         case'C':
         printf("RMS of Phase C = %f\n",result.rmsC);
         break;
+        default:
+            printf("Invalid phase\n");
     }
 }
-    double compute_peakToPeakA(WaveformSample *sample,int n) {
+    peakToPeak compute_peakToPeak(WaveformSample *sample,int n) {
         double PhaseAV =0.0;
         double vmaxPA = 0.0;
         double vminPA = 0.0;
 
+        double PhaseBV =0.0;
+        double vmaxPB = 0.0;
+        double vminPB = 0.0;
+
+        double PhaseCV =0.0;
+        double vmaxPC = 0.0;
+        double vminPC = 0.0;
+
     for (int i =0; i < n; i++) {
         PhaseAV = sample[i].phase_A_voltage;
+        PhaseBV = sample[i].phase_B_voltage;
+        PhaseCV = sample[i].phase_C_voltage;
 
         if (PhaseAV > vmaxPA) vmaxPA = PhaseAV;
         if (PhaseAV < vminPA) vminPA = PhaseAV;
-    }
-    return vmaxPA-vminPA;
-}
-double compute_peakToPeakB(WaveformSample *sample,int n) {
-    double PhaseBV =0.0;
-    double vmaxPB = 0.0;
-    double vminPB = 0.0;
-
-    for (int i =0; i < n; i++) {
-        PhaseBV = sample[i].phase_B_voltage;
 
         if (PhaseBV > vmaxPB) vmaxPB = PhaseBV;
         if (PhaseBV < vminPB) vminPB = PhaseBV;
-    }
-    return vmaxPB-vminPB;
-}
-double compute_peakToPeakC(WaveformSample *sample,int n) {
-    double PhaseCV =0.0;
-    double vmaxPC = 0.0;
-    double vminPC = 0.0;
-
-    for (int i =0; i < n; i++) {
-        PhaseCV = sample[i].phase_C_voltage;
 
         if (PhaseCV > vmaxPC) vmaxPC = PhaseCV;
         if (PhaseCV < vminPC) vminPC = PhaseCV;
     }
-    return vmaxPC-vminPC;
+    peakToPeak result;
+    result.peakToPeakA = vmaxPA - vminPA;
+    result.peakToPeakB = vmaxPB - vminPB;
+    result.peakToPeakC = vmaxPC - vminPC;
+
+    return result;
 }
-double compute_peakToPeak(WaveformSample *sample,int n,int phase) {
+
+void pToPPhaseQ(peakToPeak result) {
     char choice;
-    printf("Which Peak to peak voltage phase would you like('A','B','C')\n");
+    printf("Which peak to peak phase would you like('A','B','C')\n");
     scanf(" %c",&choice);
     switch (choice) {
-        case 'A': {
-            double tempPtoP = compute_peakToPeakA(sample,n);
-            printf("Peak to peak of phase A=%f\n",tempPtoP);
-            return tempPtoP;
-        }
-        case 'B': {
-            double tempPtoP = compute_peakToPeakB(sample,n);
-            printf("Peak to peak of phase B=%f\n",tempPtoP);
-            return tempPtoP;
-        }
-        case 'C': {
-            double tempPtoP = compute_peakToPeakC(sample,n);
-            printf("Peak to peak of phase C=%f\n",tempPtoP);
-            return tempPtoP;
-        }
-            default:
-                printf("Invalid phase\n");
-            return 0.0;
+        case 'A':
+            printf("Peak to peak of Phase A = %f\n",result.peakToPeakA);
+            break;
+        case'B':
+            printf("Peak to peak of Phase B = %f\n",result.peakToPeakB);
+            break;
+        case'C':
+            printf("Peak to peak of Phase C = %f\n",result.peakToPeakC);
+            break;
+        default:
+            printf("Invalid phase\n");
     }
 }
 double compute_DCoffsetA(WaveformSample *sample,int n) {

@@ -31,6 +31,7 @@ WaveformSample* WaveformArray(int count){
     return arr;
 }
 
+
 int PQLR(void) {
     int count = lineCountReader();
     if (count == 0) {
@@ -88,6 +89,10 @@ int PQLR(void) {
     rmsResult rms =compute_rms(sample,n);
     rmsPhaseQ(rms);
     check_compliance(rms.rmsA, rms.rmsB, rms.rmsC);
+
+    peakToPeak pToP =compute_peakToPeak(sample,n);
+    pToPPhaseQ(pToP);
+
     compute_peakToPeak(sample,n);
     compute_dc_offset(sample,n);
     count_clipped(sample,n);
