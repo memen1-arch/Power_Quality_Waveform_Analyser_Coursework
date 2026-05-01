@@ -85,10 +85,13 @@ int PQLR(void) {
 
             n++; //adds 1 to the n counter
         }
-    compute_rms(sample,n);
+    rmsResult rms =compute_rms(sample,n);
+    rmsPhaseQ(rms);
+    check_compliance(rms.rmsA, rms.rmsB, rms.rmsC);
     compute_peakToPeak(sample,n);
-    compute_DCoffset(sample,n);
-    detectClipping(sample,n);
+    compute_dc_offset(sample,n);
+    count_clipped(sample,n);
+
     free(sample);
     fclose(fp);
     return 0;

@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include "waveform.h"
 
-double compute_rms(WaveformSample *sample,int n) {
-    double sum_sqA =0.0;
+rmsResult compute_rms(WaveformSample *sample,int n) {
+    double sum_sqA = 0.0;
     double sum_sqB = 0.0;
     double sum_sqC = 0.0;
 
@@ -13,26 +13,28 @@ double compute_rms(WaveformSample *sample,int n) {
         sum_sqB += sample[i].phase_B_voltage * sample[i].phase_B_voltage;
         sum_sqC += sample[i].phase_C_voltage * sample[i].phase_C_voltage;
     }
-    double rmsA = sqrt(sum_sqA/n);
-    double rmsB = sqrt(sum_sqB/n);
-    double rmsC = sqrt(sum_sqC/n);
+    rmsResult result;
+    result.rmsA = sqrt(sum_sqA/n);
+    result.rmsB = sqrt(sum_sqB/n);
+    result.rmsC = sqrt(sum_sqC/n);
+    return result;
+}
+void rmsPhaseQ(rmsResult result) {
     char choice;
     printf("Which RMS phase would you like('A','B','C')\n");
-    scanf("%c",&choice);
+    scanf(" %c",&choice);
     switch (choice) {
         case 'A':
-        printf("RMS of Phase A = %f\n",rmsA);
+        printf("RMS of Phase A = %f\n",result.rmsA);
         break;
         case'B':
-        printf("RMS of Phase B = %f\n",rmsB);
+        printf("RMS of Phase B = %f\n",result.rmsB);
         break;
         case'C':
-        printf("RMS of Phase C = %f\n",rmsC);
+        printf("RMS of Phase C = %f\n",result.rmsC);
         break;
     }
-    return 0;
 }
-
     double compute_peakToPeakA(WaveformSample *sample,int n) {
         double PhaseAV =0.0;
         double vmaxPA = 0.0;
@@ -124,7 +126,7 @@ double compute_DCoffsetC(WaveformSample *sample,int n) {
     }
     return DCoffsetC;
 }
-double compute_DCoffset(WaveformSample *sample,int n,int phase) {
+double compute_dc_offset(WaveformSample *sample,int n,int phase) {
     char choice;
     printf("Which DC offset voltage phase would you like('A','B','C')\n");
     scanf(" %c",&choice);
@@ -150,7 +152,7 @@ double compute_DCoffset(WaveformSample *sample,int n,int phase) {
     }
 }
 
-double detectClipping(WaveformSample *sample, int n) {
+double count_clipped(WaveformSample *sample, int n) {
     int clipA = 0;
     int clipB = 0;
     int clipC = 0;
@@ -187,3 +189,17 @@ double detectClipping(WaveformSample *sample, int n) {
                 return 0.0;
         }
     }
+void check_compliance(double rmsA,double rmsB ,double rmsC) {
+    if (rmsA >= 207.0 && rmsA <= 253.0)
+        printf("Phase A rms is \n");
+    else
+        printf("Phase A rms is not compliant\n");
+    if (rmsB >= 207.0 && rmsB <= 253.0)
+        printf("Phase B rms is compliant\n");
+    else
+        printf("Phase B rms is not compliant\n");
+    if (rmsC >= 207.0 && rmsC <= 253.0)
+        printf("Phase C rms is compliant\n");
+    else
+        printf("Phase C rms is not compliant\n");
+}
