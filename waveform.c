@@ -118,7 +118,7 @@ DCoffset compute_DCoffset(WaveformSample *sample,int n) {
 }
 void DCoffsetQ(DCoffset result) {
     char choice;
-    printf("Which RMS phase would you like('A','B','C')\n");
+    printf("Which DCoffset phase would you like('A','B','C')\n");
     scanf(" %c",&choice);
     switch (choice) {
         case 'A':
@@ -135,7 +135,7 @@ void DCoffsetQ(DCoffset result) {
     }
 }
 
-double count_clipped(WaveformSample *sample, int n) {
+clipCountP count_clipped(WaveformSample *sample, int n) {
     int clipA = 0;
     int clipB = 0;
     int clipC = 0;
@@ -150,39 +150,43 @@ double count_clipped(WaveformSample *sample, int n) {
         if (sample[i].phase_C_voltage >= 324.9 || sample[i].phase_C_voltage <= -324.9) {
             clipC++;
         }
+        clipCountP result;
+        result.clipA =clipA;
+        result.clipB =clipB;
+        result.clipC =clipC;
+
+        return result;
     }
+}
+    void clipCountQ(clipCountP result) {
         char choice;
-        printf("Which voltage phase would you like to see the clipping count for('A','B','C')\n");
+        printf("Which phase would you like to see the clipping for would you like('A','B','C')\n");
         scanf(" %c",&choice);
         switch (choice) {
-            case 'A': {
-                printf("Clipping count for phase A = %d\n",clipA);
-                return clipA;
-            }
-            case 'B': {
-                printf("Clipping count for phase B = %d\n",clipB);
-                return clipB;
-            }
-            case 'C': {
-                printf("Clipping count for phase C = %d\n",clipC);
-                return clipC;
-            }
+            case 'A':
+                printf("Clipping of Phase A = %d\n",result.clipA);
+                break;
+            case'B':
+                printf("Clipping of Phase B = %d\n",result.clipB);
+                break;
+            case'C':
+                printf("Clipping of Phase C = %d\n",result.clipC);
+                break;
             default:
                 printf("Invalid phase\n");
-                return 0.0;
         }
     }
-void check_compliance(double rmsA,double rmsB ,double rmsC) {
-    if (rmsA >= 207.0 && rmsA <= 253.0)
-        printf("Phase A rms is compliant\n");
-    else
-        printf("Phase A rms is not compliant\n");
-    if (rmsB >= 207.0 && rmsB <= 253.0)
-        printf("Phase B rms is compliant\n");
-    else
-        printf("Phase B rms is not compliant\n");
-    if (rmsC >= 207.0 && rmsC <= 253.0)
-        printf("Phase C rms is compliant\n");
-    else
-        printf("Phase C rms is not compliant\n");
-}
+    void check_compliance(double rmsA,double rmsB ,double rmsC) {
+        if (rmsA >= 207.0 && rmsA <= 253.0)
+            printf("Phase A rms is compliant\n");
+        else
+            printf("Phase A rms is not compliant\n");
+        if (rmsB >= 207.0 && rmsB <= 253.0)
+            printf("Phase B rms is compliant\n");
+        else
+            printf("Phase B rms is not compliant\n");
+        if (rmsC >= 207.0 && rmsC <= 253.0)
+            printf("Phase C rms is compliant\n");
+        else
+            printf("Phase C rms is not compliant\n");
+    }

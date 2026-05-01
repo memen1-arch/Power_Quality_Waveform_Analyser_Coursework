@@ -96,7 +96,8 @@ int PQLR(void) {
     DCoffset offset =compute_DCoffset(sample,n);
     DCoffsetQ(offset);
 
-    count_clipped(sample,n);
+    clipCountP clip =count_clipped(sample,n);
+    clipCountQ(clip);
 
     free(sample);
     fclose(fp);
