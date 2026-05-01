@@ -90,56 +90,48 @@ void pToPPhaseQ(peakToPeak result) {
             printf("Invalid phase\n");
     }
 }
-double compute_DCoffsetA(WaveformSample *sample,int n) {
+DCoffset compute_DCoffset(WaveformSample *sample,int n) {
     double DCoffsetA = 0.0;
     double voltageASum = 0.0;
-    for (int i =0; i < n; i++) {
-        voltageASum = voltageASum + sample[i].phase_A_voltage;
-        DCoffsetA = (voltageASum / n);
-    }
-    return DCoffsetA;
-}
-double compute_DCoffsetB(WaveformSample *sample,int n) {
+
     double DCoffsetB = 0.0;
     double voltageBSum = 0.0;
-    for (int i =0; i < n; i++) {
-        voltageBSum = voltageBSum + sample[i].phase_B_voltage;
-        DCoffsetB = (voltageBSum / n);
-    }
-    return DCoffsetB;
-}
-double compute_DCoffsetC(WaveformSample *sample,int n) {
+
     double DCoffsetC = 0.0;
     double voltageCSum = 0.0;
+
+
     for (int i =0; i < n; i++) {
+        voltageASum = voltageASum + sample[i].phase_A_voltage;
+
+        voltageBSum = voltageBSum + sample[i].phase_B_voltage;
+
         voltageCSum = voltageCSum + sample[i].phase_C_voltage;
-        DCoffsetC = (voltageCSum / n);
     }
-    return DCoffsetC;
+    DCoffset result;
+    result.DCoffsetA = (voltageASum / n);
+    result.DCoffsetB = (voltageBSum / n);
+    result.DCoffsetC = (voltageCSum / n);
+        return result;
+
+
 }
-double compute_dc_offset(WaveformSample *sample,int n,int phase) {
+void DCoffsetQ(DCoffset result) {
     char choice;
-    printf("Which DC offset voltage phase would you like('A','B','C')\n");
+    printf("Which RMS phase would you like('A','B','C')\n");
     scanf(" %c",&choice);
     switch (choice) {
-        case 'A': {
-            double tempOS = compute_DCoffsetA(sample,n);
-            printf("DC offset of phase A=%f\n",tempOS);
-            return tempOS;
-        }
-        case 'B': {
-            double tempOS = compute_DCoffsetB(sample,n);
-            printf("DC offset of phase B=%f\n",tempOS);
-            return tempOS;
-        }
-        case 'C': {
-            double tempOS = compute_DCoffsetC(sample,n);
-            printf("DC offset of phase C=%f\n",tempOS);
-            return tempOS;
-        }
+        case 'A':
+            printf("DC offset of Phase A = %f\n",result.DCoffsetA);
+            break;
+        case'B':
+            printf("DC offset of Phase B = %f\n",result.DCoffsetB);
+            break;
+        case'C':
+            printf("DC offset of Phase C = %f\n",result.DCoffsetC);
+            break;
         default:
             printf("Invalid phase\n");
-            return 0.0;
     }
 }
 
@@ -182,7 +174,7 @@ double count_clipped(WaveformSample *sample, int n) {
     }
 void check_compliance(double rmsA,double rmsB ,double rmsC) {
     if (rmsA >= 207.0 && rmsA <= 253.0)
-        printf("Phase A rms is \n");
+        printf("Phase A rms is compliant\n");
     else
         printf("Phase A rms is not compliant\n");
     if (rmsB >= 207.0 && rmsB <= 253.0)

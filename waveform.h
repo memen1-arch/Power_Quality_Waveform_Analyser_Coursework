@@ -14,9 +14,15 @@ rmsResult compute_rms(WaveformSample *sample,int n);
 typedef struct {
     double peakToPeakA,peakToPeakB,peakToPeakC;
 }peakToPeak;
-void pToPPhaseQ(peakToPeak peak_to_peak);
+peakToPeak compute_peakToPeak(WaveformSample *sample,int n);
+void pToPPhaseQ(peakToPeak result);
 void check_compliance(double rmsA,double rmsB,double rmsC);
 void rmsPhaseQ(rmsResult result);
+typedef struct {
+   double DCoffsetA ,DCoffsetB ,DCoffsetC;
+}DCoffset;
+DCoffset compute_DCoffset(WaveformSample *sample,int n);
+void DCoffsetQ(DCoffset result);
 int lineCountReader(void);
 WaveformSample* WaveformArray(int count);
 int PQLR(void);

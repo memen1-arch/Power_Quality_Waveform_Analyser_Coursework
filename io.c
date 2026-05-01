@@ -93,8 +93,9 @@ int PQLR(void) {
     peakToPeak pToP =compute_peakToPeak(sample,n);
     pToPPhaseQ(pToP);
 
-    compute_peakToPeak(sample,n);
-    compute_dc_offset(sample,n);
+    DCoffset offset =compute_DCoffset(sample,n);
+    DCoffsetQ(offset);
+
     count_clipped(sample,n);
 
     free(sample);
