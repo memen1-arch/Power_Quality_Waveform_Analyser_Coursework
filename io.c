@@ -86,6 +86,7 @@ int PQLR(void) {
 
             n++; //adds 1 to the n counter
         }
+
     rmsResult rms =compute_rms(sample,n);
     rmsPhaseQ(rms);
     check_compliance(rms.rmsA, rms.rmsB, rms.rmsC);
@@ -99,7 +100,36 @@ int PQLR(void) {
     clipCountP clip =count_clipped(sample,n);
     clipCountQ(clip);
 
+    print_results(rms,pToP,offset,clip);
     free(sample);
     fclose(fp);
     return 0;
+}
+int print_results(rmsResult rms, peakToPeak pToP, DCoffset offset, clipCountP clip) {
+    FILE *fp = fopen("results.txt","w");
+    if (fp == NULL) {
+        printf("Error opening file\n");
+    }
+    fprintf(fp,"Power Quality Analysis Results\n");
+    fprintf(fp,"RMS Results\n");
+    fprintf(fp,"RMS Phase A:%.4f\n",rms.rmsA);
+    fprintf(fp,"RMS Phase B:%.4f\n",rms.rmsB);
+    fprintf(fp,"RMS Phase C:%.4f\n",rms.rmsC);
+
+    fprintf(fp,"Peak to peak\n");
+    fprintf(fp,"Peak to peak of Phase A:%.4f\n",pToP.peakToPeakA);
+    fprintf(fp,"Peak to peak of Phase B:%.4f\n",pToP.peakToPeakB);
+    fprintf(fp,"Peak to peak of Phase C:%.4f\n",pToP.peakToPeakC);
+
+    fprintf(fp,"DC offset\n");
+    fprintf(fp,"DC offset of Phase A:%.4f\n",offset.DCoffsetA);
+    fprintf(fp,"DC offset of Phase B:%.4f\n",offset.DCoffsetB);
+    fprintf(fp,"DC offset of Phase C:%.4f\n",offset.DCoffsetC);
+
+    fprintf(fp,"Clipping Count\n");
+    fprintf(fp,"Clip count of Phase A:%d\n",clip.clipA);
+    fprintf(fp,"Clip count of Phase B:%d\n",clip.clipB);
+    fprintf(fp,"Clip count of Phase C:%d\n",clip.clipC);
+
+    fclose(fp);
 }

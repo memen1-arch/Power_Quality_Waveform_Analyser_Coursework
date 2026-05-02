@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "waveform.h"
+#include "io.h"
 
 rmsResult compute_rms(WaveformSample *sample,int n) {
     double sum_sqA = 0.0;
@@ -150,13 +151,14 @@ clipCountP count_clipped(WaveformSample *sample, int n) {
         if (sample[i].phase_C_voltage >= 324.9 || sample[i].phase_C_voltage <= -324.9) {
             clipC++;
         }
+    }
         clipCountP result;
         result.clipA =clipA;
         result.clipB =clipB;
         result.clipC =clipC;
 
         return result;
-    }
+
 }
     void clipCountQ(clipCountP result) {
         char choice;
@@ -190,3 +192,4 @@ clipCountP count_clipped(WaveformSample *sample, int n) {
         else
             printf("Phase C rms is not compliant\n");
     }
+

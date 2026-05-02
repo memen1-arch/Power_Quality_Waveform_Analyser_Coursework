@@ -1,7 +1,6 @@
 //
 // Created by nilem on 27/04/2026.
 //
-
 #ifndef POWERQUALITYWAVEFORMANALYSER_IO_H
 #define POWERQUALITYWAVEFORMANALYSER_IO_H
 
