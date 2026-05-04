@@ -32,5 +32,4 @@ typedef struct {
 }DCoffset;
 DCoffset compute_DCoffset(WaveformSample *sample,int n);
 void DCoffsetQ(DCoffset result);
-
 #endif //POWER_QUALITY_ANALYSER_COURSEWORK_WAVEFORM_H

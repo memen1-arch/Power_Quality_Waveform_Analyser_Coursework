@@ -100,7 +100,7 @@ int PQLR(void) {
     clipCountP clip =count_clipped(sample,n);
     clipCountQ(clip);
 
-    print_results(rms,pToP,offset,clip);
+ print_results(rms,pToP,offset,clip);
     free(sample);
     fclose(fp);
     return 0;

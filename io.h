@@ -8,4 +8,5 @@ int lineCountReader(void);
 WaveformSample* WaveformArray(int count);
 
 int PQLR(void);
+int print_results(rmsResult rms, peakToPeak pToP, DCoffset offset, clipCountP clip);
 #endif //POWERQUALITYWAVEFORMANALYSER_IO_H
