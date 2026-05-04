@@ -17,7 +17,7 @@ rmsResult compute_rms(WaveformSample *sample,int n) {
     rmsResult result;
     result.rmsA = sqrt(sum_sqA/n);
     result.rmsB = sqrt(sum_sqB/n);
-    result.rmsC = sqrt(sum_sqC/n);
+    result.rmsC = sqrt(sum_sqC/n); //storing data in variable in struct
     return result;
 }
 void rmsPhaseQ(rmsResult result) {
@@ -56,7 +56,7 @@ void rmsPhaseQ(rmsResult result) {
         PhaseBV = sample[i].phase_B_voltage;
         PhaseCV = sample[i].phase_C_voltage;
 
-        if (PhaseAV > vmaxPA) vmaxPA = PhaseAV;
+        if (PhaseAV > vmaxPA) vmaxPA = PhaseAV; //if the current phase AV is greater than vmaxPA then make that the new vmaxPA
         if (PhaseAV < vminPA) vminPA = PhaseAV;
 
         if (PhaseBV > vmaxPB) vmaxPB = PhaseBV;
@@ -179,7 +179,7 @@ clipCountP count_clipped(WaveformSample *sample, int n) {
         }
     }
     void check_compliance(double rmsA,double rmsB ,double rmsC) {
-        if (rmsA >= 207.0 && rmsA <= 253.0)
+        if (rmsA >= 207.0 && rmsA <= 253.0) // Out of bounds
             printf("Phase A rms is compliant\n");
         else
             printf("Phase A rms is not compliant\n");

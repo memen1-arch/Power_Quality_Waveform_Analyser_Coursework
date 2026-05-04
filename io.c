@@ -24,7 +24,7 @@ int lineCountReader(void) { //read each line add a count when line has been read
     return count;
 }
 WaveformSample* WaveformArray(int count){
-     WaveformSample*arr = malloc(count*sizeof(WaveformSample)); //allocate enough memory
+     WaveformSample*arr = malloc(count*sizeof(WaveformSample)); //allocate enough memory based on count of lines from line reader
     if (arr == NULL) {
         return NULL;
     }
@@ -48,7 +48,7 @@ int PQLR(void) {
 
     char line[256]; //Parsing Header
     fgets(line,sizeof(line),fp);
-    while (fgets(line,sizeof(line),fp) != NULL && n < count) { //read one line from the CSV until there is no more lines or n is > 50
+    while (fgets(line,sizeof(line),fp) != NULL && n < count) { //read one line from the CSV until there is no more lines or n is less than count
         char *token;
         token = strtok(line,",");
         double time = atof(token);

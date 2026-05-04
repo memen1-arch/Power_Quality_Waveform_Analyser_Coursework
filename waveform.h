@@ -8,10 +8,6 @@ typedef struct {
     double timestamp,phase_A_voltage,phase_B_voltage,phase_C_voltage,line_current,frequency,power_factor,thd_percent;
 }WaveformSample; //Struct that holds all 8 fields for a single row of the CSV
 
-int lineCountReader(void);
-WaveformSample* WaveformArray(int count);
-int PQLR(void);
-
 typedef struct {
     double rmsA,rmsB,rmsC;
 }rmsResult;
